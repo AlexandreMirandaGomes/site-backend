@@ -1,29 +1,33 @@
 package br.com.xande.sitebackend;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("message")
 public class MessageController {
 
+    @Autowired
+    MessageService service;
+
     @PostMapping
     public void create(@RequestBody String message) {
-        System.out.println("Mensagem criada:" + message);
+        service.create(message);
     }
 
     @GetMapping("{id}")
     public String get(@PathVariable Long id) {
-        return "Mensagem com id " + id + " obtida";
+        return service.get(id);
     }
 
     @PutMapping("{id}")
-    public void update(@PathVariable Long id) {
-        System.out.println("A mensagem de id " + id + " foi atualizada");
+    public void update(@PathVariable Long id, @RequestBody String message) {
+        service.update(id,message);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
-        System.out.println("A mensagem de id " + id + " foi deletada");
+        service.delete(id);
     }
 
 }
