@@ -1,10 +1,12 @@
 package br.com.xande.sitebackend;
 
+import java.util.Optional;
+
 public interface MessageService {
 
     void create(String message);
 
-    String get(Long id);
+    Message get(Long id);
 
     void update(Long id, String message);
 
