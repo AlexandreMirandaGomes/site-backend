@@ -47,7 +47,7 @@ public class MessageServiceImpl implements MessageService {
             repository.save(message);
             System.out.println("Mensagem com o id " + id + " alterada para " + text);
         }
-        throw new ResponseStatusException(NOT_FOUND, "Mensagem não encontrada");
+        else throw new ResponseStatusException(NOT_FOUND, "Mensagem não encontrada");
     }
 
     @Override
