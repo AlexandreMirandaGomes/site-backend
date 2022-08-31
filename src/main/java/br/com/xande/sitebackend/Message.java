@@ -1,9 +1,7 @@
 package br.com.xande.sitebackend;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Message {
@@ -13,7 +11,7 @@ public class Message {
     private Long id;
     @Column(length = 255)
     private String text;
-    private LocalDate date;
+    private LocalDateTime date;
 
     public Long getId() {
         return id;
@@ -31,11 +29,11 @@ public class Message {
         this.text = text;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 }

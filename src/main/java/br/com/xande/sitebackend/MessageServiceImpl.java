@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityNotFoundException;
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -18,13 +17,13 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageRepository repository;
 
+
     @Override
     public void create(String message) {
         Message message1 = new Message();
         message1.setText(message);
-        message1.setDate(LocalDate.now());
+        message1.setDate(LocalDateTime.now());
         repository.save(message1);
-        System.out.println(repository.count());
         System.out.println("Mensagem criada com sucesso: " + message);
     }
 
@@ -54,5 +53,10 @@ public class MessageServiceImpl implements MessageService {
     public void delete(Long id) {
         repository.deleteById(id);
         System.out.println("Mensagem com o id " + id + " deletada com sucesso");
+    }
+
+    @Override
+    public List<Message> findAll(String text) {
+        return repository.findByTextContaining(text);
     }
 }

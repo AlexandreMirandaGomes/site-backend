@@ -3,7 +3,7 @@ package br.com.xande.sitebackend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequestMapping("message")
@@ -20,6 +20,11 @@ public class MessageController {
     @GetMapping("{id}")
     public Message get(@PathVariable Long id) {
         return service.get(id);
+    }
+
+    @GetMapping
+    public List<Message> findAll(String text) {
+        return service.findAll(text);
     }
 
     @PutMapping("{id}")

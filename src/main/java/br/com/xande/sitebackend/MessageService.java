@@ -1,6 +1,6 @@
 package br.com.xande.sitebackend;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface MessageService {
 
@@ -11,4 +11,7 @@ public interface MessageService {
     void update(Long id, String message);
 
     void delete(Long id);
+
+    List<Message> findAll(String text);
+
 }
