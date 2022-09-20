@@ -1,11 +1,16 @@
 package br.com.xande.sitebackend;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -14,12 +19,23 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
 public class MessageServiceImpl implements MessageService {
 
+    private final List<String> BADWORDS = new ArrayList<>(List.of("word1", "word2"));
+
+
     @Autowired
     private MessageRepository repository;
+
+    @Autowired
+    private MessageSource messageSource;
 
 
     @Override
     public void create(String message) {
+
+        if(BADWORDS.stream().anyMatch(badWord -> StringUtils.containsIgnoreCase(message,badWord))) {
+            throw new BusinessException(messageSource.getMessage("error.bad.word",null, Locale.getDefault()));
+        };
+
         Message message1 = new Message();
         message1.setText(message);
         message1.setDate(LocalDateTime.now());
@@ -34,7 +50,7 @@ public class MessageServiceImpl implements MessageService {
             System.out.println("Mensagem com o id " + id + " obtida com sucesso");
             return message.get();
         }
-        throw new ResponseStatusException(NOT_FOUND, "Mensagem não encontrada");
+        throw new EntityNotFoundException();
     }
 
     @Override

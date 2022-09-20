@@ -1,8 +1,10 @@
 package br.com.xande.sitebackend;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -36,5 +38,7 @@ public class MessageController {
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
+
+
 
 }
