@@ -19,7 +19,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-    private final List<String> BADWORDS = new ArrayList<>(List.of("word1", "word2"));
+    private static final List<String> BADWORDS = new ArrayList<>(List.of("word1", "word2"));
 
 
     @Autowired
@@ -73,6 +73,11 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> findAll(String text) {
+        if (StringUtils.isBlank(text)) {
+            return repository.findAll();
+        }
         return repository.findByTextContaining(text);
+
+
     }
 }

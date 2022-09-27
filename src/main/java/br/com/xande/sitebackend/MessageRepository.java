@@ -17,4 +17,6 @@ public interface MessageRepository extends CrudRepository<Message, Long> {
     @Query(value = "select * from message m where text ilike %:text%", nativeQuery = true)
     List<Message> findByTextContainingNativeQuery(String text);
 
+    List<Message> findAll();
+
 }

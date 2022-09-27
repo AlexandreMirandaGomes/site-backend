@@ -1,21 +1,36 @@
 package br.com.xande.sitebackend;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Locale;
 
-@ControllerAdvice
+
+@RestControllerAdvice
 public class ExceptionHandlerController {
 
-    @ResponseStatus(value= HttpStatus.NOT_FOUND,
-            reason="Entidade não encontrada")  // 404
+    @Autowired
+    private MessageSource messageSource;
+
+    @ResponseStatus(value= HttpStatus.NOT_FOUND)// 404
     @ExceptionHandler(EntityNotFoundException.class)
-    public Message notFound(EntityNotFoundException e) {
-        return new Message();
+    public Response notFound(EntityNotFoundException e) {
+       return new Response(messageSource.getMessage("error.not.found",null, Locale.getDefault()));
     }
+
+    @ResponseStatus(value= HttpStatus.UNPROCESSABLE_ENTITY)// 422
+    @ExceptionHandler(BusinessException.class)
+    public Response businessException(BusinessException e) {
+        return new Response(e.getMessage());
+    }
+
+
+
+
 
 
 }
