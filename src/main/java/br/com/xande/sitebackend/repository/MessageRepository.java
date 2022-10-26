@@ -1,5 +1,6 @@
-package br.com.xande.sitebackend;
+package br.com.xande.sitebackend.repository;
 
+import br.com.xande.sitebackend.entity.Message;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

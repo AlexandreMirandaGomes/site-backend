@@ -1,4 +1,4 @@
-package br.com.xande.sitebackend;
+package br.com.xande.sitebackend.entity;
 
 import lombok.Data;
 

@@ -1,4 +1,6 @@
-package br.com.xande.sitebackend;
+package br.com.xande.sitebackend.service;
+
+import br.com.xande.sitebackend.entity.Message;
 
 import java.util.List;
 
