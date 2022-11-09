@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("signup")
 public class UserController {
 
     @Autowired
     UserService userService;
 
     @PostMapping
-    public void create(@RequestBody UserDTO dto) {
-        userService.create(dto.getName(), dto.getPassword());
+    public void signUp(@RequestBody UserDTO dto) {
+        userService.signUp(dto.getEmail(), dto.getPassword());
     }
 
 

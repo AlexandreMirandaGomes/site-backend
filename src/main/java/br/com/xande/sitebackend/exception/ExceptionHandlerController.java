@@ -18,22 +18,30 @@ public class ExceptionHandlerController {
     @Autowired
     private MessageSource messageSource;
 
-    @ResponseStatus(value= HttpStatus.NOT_FOUND)// 404
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)// 404
     @ExceptionHandler(EntityNotFoundException.class)
     public Response notFound(EntityNotFoundException e) {
-       return new Response(messageSource.getMessage("error.not.found",null, Locale.getDefault()));
+        return new Response(messageSource.getMessage("error.not.found", null, Locale.getDefault()));
     }
 
 
-    @ResponseStatus(value= HttpStatus.UNPROCESSABLE_ENTITY)// 422
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)// 422
     @ExceptionHandler(BusinessException.class)
     public Response businessException(BusinessException e) {
         return new Response(e.getMessage());
     }
 
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)// 401
+    @ExceptionHandler(AuthenticationFailException.class)
+    public Response authenticationFailException(AuthenticationFailException e) {
+        return new Response(e.getMessage());
+    }
 
-
-
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)// 400
+    @ExceptionHandler(UserSignedUpException.class)
+    public Response userSignedUpException(UserSignedUpException e) {
+        return new Response(e.getMessage());
+    }
 
 
 }

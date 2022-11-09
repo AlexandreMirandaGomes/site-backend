@@ -15,6 +15,8 @@ public class Message {
     @Column(length = 255)
     private String text;
     private LocalDateTime date;
+
+
 }
 
 
