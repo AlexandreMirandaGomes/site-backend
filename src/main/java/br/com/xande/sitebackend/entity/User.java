@@ -1,6 +1,7 @@
 package br.com.xande.sitebackend.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 @Data
 @Entity
 @Table(name = "cad_user")
+@NoArgsConstructor
 public class User {
     @Id
     @SequenceGenerator(allocationSize = 1, schema = "public", sequenceName = "user_id_seq", name = "user_id_seq")

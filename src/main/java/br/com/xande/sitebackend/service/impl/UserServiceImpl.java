@@ -22,12 +22,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     AuthServiceImpl authService;
 
-    @Autowired
-    TokenRepository tokenService;
-
     @Override
     @Transactional
-    public void signUp(String email, String password) {
+    public String signUp(String email, String password) {
 
         if(Objects.nonNull(userRepository.findByEmail(email))) {
             throw new AuthenticationFailException("Usuário já cadastrado");
@@ -42,11 +39,7 @@ public class UserServiceImpl implements UserService {
         User user = new User(email,encryptedPassword);
         userRepository.save(user);
 
-        Authentication authentication = new Authentication(user);
-
-        tokenService.save(authentication);
-
-
+        return authService.generateToken(user);
 
 
     }

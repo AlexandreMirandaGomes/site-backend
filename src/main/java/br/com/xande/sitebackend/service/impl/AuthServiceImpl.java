@@ -1,7 +1,9 @@
 package br.com.xande.sitebackend.service.impl;
 
+import br.com.xande.sitebackend.entity.Authentication;
 import br.com.xande.sitebackend.entity.User;
 import br.com.xande.sitebackend.exception.AuthenticationFailException;
+import br.com.xande.sitebackend.repository.TokenRepository;
 import br.com.xande.sitebackend.repository.UserRepository;
 import br.com.xande.sitebackend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
-import java.util.UUID;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -23,8 +24,11 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    TokenRepository tokenRepository;
+
     @Override
-    public String login(String name, String password) throws NoSuchAlgorithmException {
+    public String signIn(String name, String password) throws NoSuchAlgorithmException {
 
         User user = userRepository.findByEmail(name);
 
@@ -32,19 +36,24 @@ public class AuthServiceImpl implements AuthService {
             throw new AuthenticationFailException("usuário não encontrado");
         }
 
-        if (!name.equals(user.getEmail())) {
-            throw new AuthenticationFailException("login errado");
-        }
-
         String encryptedPassword = hashPassword(password);
 
         if(!encryptedPassword.equals(user.getPassword())) {
-            throw new AuthenticationFailException("Password errado");
+            throw new AuthenticationFailException("Login/password podem estar incorretos");
         }
 
-        userRepository.save(user);
+        return generateToken(user);
 
-        return "success";
+    }
+
+    @Override
+    public String generateToken(User user) {
+
+        Authentication authentication = new Authentication(user);
+
+        tokenRepository.save(authentication);
+
+        return authentication.getToken();
 
     }
 

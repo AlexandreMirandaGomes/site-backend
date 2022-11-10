@@ -18,9 +18,9 @@ public class AuthController {
     AuthService authService;
 
 
-    @PostMapping("login")
-    public String login (@RequestBody AuthDTO dto) throws NoSuchAlgorithmException {
-        return authService.login(dto.getName(), dto.getPassword());
+    @PostMapping("signin")
+    public String signIn (@RequestBody AuthDTO dto) throws NoSuchAlgorithmException {
+        return authService.signIn(dto.getName(), dto.getPassword());
     }
 
 

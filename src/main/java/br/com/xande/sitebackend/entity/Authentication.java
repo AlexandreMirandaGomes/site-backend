@@ -1,10 +1,13 @@
 package br.com.xande.sitebackend.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Data
 @Table(name = "authentication")
 public class Authentication {
 
@@ -19,7 +22,7 @@ public class Authentication {
     private LocalDate createdDate;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
+    @JoinColumn(nullable = false, name = "id_user")
     private User user;
 
     public Authentication(User user) {

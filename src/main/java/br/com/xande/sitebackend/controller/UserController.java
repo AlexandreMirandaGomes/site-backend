@@ -16,8 +16,8 @@ public class UserController {
     UserService userService;
 
     @PostMapping
-    public void signUp(@RequestBody UserDTO dto) {
-        userService.signUp(dto.getEmail(), dto.getPassword());
+    public String signUp(@RequestBody UserDTO dto) {
+        return userService.signUp(dto.getEmail(), dto.getPassword());
     }
 
 
