@@ -15,10 +15,10 @@ created date not null
 
 CREATE SEQUENCE user_id_seq;
 
-create table tokens (
+create table authentication (
 id int8 not null primary key,
 token varchar not null,
-created date not null,
+created_date date not null,
 id_user int8 not null
 );
 

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -48,6 +49,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String generateToken(User user) {
+
+        tokenRepository.deleteAll(tokenRepository.findAllByUser(user));
 
         Authentication authentication = new Authentication(user);
 

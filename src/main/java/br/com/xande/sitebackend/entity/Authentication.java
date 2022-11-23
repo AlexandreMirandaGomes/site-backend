@@ -1,13 +1,16 @@
 package br.com.xande.sitebackend.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "authentication")
 public class Authentication {
 
