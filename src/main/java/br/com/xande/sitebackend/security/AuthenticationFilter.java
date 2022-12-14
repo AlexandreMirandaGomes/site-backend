@@ -2,6 +2,7 @@ package br.com.xande.sitebackend.security;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter {
     protected AuthenticationFilter(RequestMatcher protectedUrls) {
@@ -23,10 +25,15 @@ public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        token = StringUtils.removeStart(token,"Bearer").trim();
-        Authentication requestAuthentication = new UsernamePasswordAuthenticationToken(token,token);
+        if(Objects.nonNull(token)) {
+            token = StringUtils.removeStart(token,"Bearer").trim();
+            Authentication requestAuthentication = new UsernamePasswordAuthenticationToken(token,token);
+            return getAuthenticationManager().authenticate(requestAuthentication);
+        }
+        throw new BadCredentialsException("Falha na autenticação");
 
-        return getAuthenticationManager().authenticate(requestAuthentication);
+
+
     }
 
     @Override

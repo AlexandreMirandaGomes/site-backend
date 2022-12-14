@@ -24,3 +24,8 @@ id_user int8 not null
 
 CREATE SEQUENCE tokens_id_seq;
 
+
+ALTER TABLE message ADD COLUMN id_user INT8 NOT NULL;
+
+ALTER TABLE message ADD FOREIGN KEY (id_user) REFERENCES cad_user(id);
+

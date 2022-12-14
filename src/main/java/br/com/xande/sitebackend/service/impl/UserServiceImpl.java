@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends GenericServiceImpl<User> implements UserService {
 
     @Autowired
     UserRepository userRepository;
@@ -42,11 +42,6 @@ public class UserServiceImpl implements UserService {
         return authService.generateToken(user);
 
 
-    }
-
-    @Override
-    public User get(Long id) {
-        return null;
     }
 
     @Override

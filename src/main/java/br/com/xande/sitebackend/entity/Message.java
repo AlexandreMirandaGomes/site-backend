@@ -15,6 +15,9 @@ public class Message {
     @Column(length = 255)
     private String text;
     private LocalDateTime date;
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "id_user")
+    private User user;
 
 
 }
